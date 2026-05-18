@@ -858,7 +858,7 @@ const LandingPage = () => {
                   navigate(pendingRoute);
                   setPendingRoute(null);
                 } else {
-                  navigate("/role-prep");
+                  navigate("/dashboard");
                 }
               }}
             />
