@@ -15,7 +15,7 @@
 
 **Your ultimate companion for crushing technical interviews with AI-powered questions, real-time feedback, and comprehensive preparation tools.**
 
-[🌐 Live Demo](#) • [📖 Documentation](#) • [🐛 Report Bug](#) • [💡 Request Feature](#)
+[🌐 Live Demo](https://preppilot-12n6.onrender.com/)
 
 </div>
 

@@ -19,7 +19,7 @@ const { generalLimiter, aiLimiter } = require("./middlewares/rateLimiter");
 // Remove ES Module import for cors. Use CommonJS require below.
 const app = express();
 
-app.set('trust proxy', 1);
+app.set("trust proxy", 1);
 // CORS settings: derive from env
 // FRONTEND_ORIGIN=primary production frontend
 // EXTRA_ORIGINS=comma separated additional origins (staging, preview, etc.)
@@ -37,12 +37,14 @@ const allowedOrigins = new Set(originEnvList);
 app.use((req, res, next) => {
   const origin = req.headers.origin;
   const renderPattern =
-    /^https:\/\/interview-prep(?:aration)?-ai-[a-z0-9-]+\.onrender\.com$/;
+    /^https:\/\/(?:interview-prep(?:aration)?-ai|preppilot-backend)-[a-z0-9-]+\.onrender\.com$/;
+  const localhostPattern =
+    /^http:\/\/(localhost|127\.0\.0\.1):(5\d{3}|3\d{3})$/;
   if (
     origin &&
     (allowedOrigins.has(origin) ||
       renderPattern.test(origin) ||
-      /^http:\/\/127\.0\.0\.1:5\d{3}$/.test(origin))
+      localhostPattern.test(origin))
   ) {
     res.header("Access-Control-Allow-Origin", origin);
     res.header("Vary", "Origin");
