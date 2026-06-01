@@ -40,7 +40,7 @@ const registerUser = async (req, res) => {
         const { name, email, password, profileImageUrl } = req.body;
         const userExists = await User.findOne({ email });
         if (userExists) {
-            return res.status(400).json({ message: "User already exists" });
+            return res.status(400).json({ success: false, message: "A user with this email already exists" });
         }
 
         // hash password
@@ -64,7 +64,7 @@ const registerUser = async (req, res) => {
             token: generateToken(user._id),
         });
     } catch (error) {
-        res.status(500).json({ message: "Server error", error: error.message });
+        res.status(500).json({ success: false, message: "Internal server error occurred", error: error.message });
     }
 };
 
@@ -98,13 +98,13 @@ const loginUser = async (req, res) => {
         const { email, password } = req.body;
         const user = await User.findOne({ email });
         if(!user){
-            return res.status(400).json({message:"Invalid email or password"})
+            return res.status(401).json({ success: false, message: "Invalid email or password provided" })
         }
 
         // compare password
         const isMatch = await bcrypt.compare(password, user.password);
         if(!isMatch){
-            return res.status(400).json({message:"Invalid email or password"});
+            return res.status(401).json({ success: false, message: "Invalid email or password provided" });
         }
 
         // return user data with JWT
@@ -116,7 +116,7 @@ const loginUser = async (req, res) => {
             token:generateToken(user._id),
         });
     }catch(error){
-        res.status(500).json({ message: "Server error", error: error.message });
+        res.status(500).json({ success: false, message: "Internal server error occurred", error: error.message });
     }
 };
 
@@ -145,11 +145,11 @@ const getUserProfile = async (req, res) => {
     try {
         const user = req.user;
         if(!user){
-            return res.status(404).json({message:"User not found"});
+            return res.status(404).json({ success: false, message: "Requested user profile not found" });
         }
         res.json(user);
-    } catch(error){
-        res.status(500).json({ message: "Server error", error: error.message });
+    }catch(error){
+        res.status(500).json({ success: false, message: "Internal server error occurred", error: error.message });
     }
 };
 
