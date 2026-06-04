@@ -1,7 +1,12 @@
 const express = require("express");
 const { registerUser, loginUser, getUserProfile, updateUserProfile, changePassword, deleteUserAccount } = require("../controllers/authController");
+const {
+  registerUser,
+  loginUser,
+  getUserProfile,
+} = require("../controllers/authController");
 const { protect } = require("../middlewares/authMiddleware");
-const upload = require("../middlewares/uploadMiddleware");
+const { upload } = require("../middlewares/uploadMiddleware");
 const router = express.Router();
 const { authLimiter } = require("../middlewares/rateLimiter");
 
@@ -18,11 +23,11 @@ router.delete("/delete-account", protect, deleteUserAccount);
  * @route POST /api/auth/upload-image
  */
 router.post("/upload-image", upload.single("image"), (req, res) => {
-    if (!req.file) {
-        return res.status(400).json({ message: "No file uploaded" });
-    }
-    const imageUrl = `${req.protocol}://${req.get("host")}/uploads/${req.file.filename}`;
-    res.status(200).json({ imageUrl });
+  if (!req.file) {
+    return res.status(400).json({ message: "No file uploaded" });
+  }
+  const imageUrl = `${req.protocol}://${req.get("host")}/uploads/${req.file.filename}`;
+  res.status(200).json({ imageUrl });
 });
 
 module.exports = router;
