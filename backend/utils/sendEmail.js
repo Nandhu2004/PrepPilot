@@ -10,13 +10,12 @@ const createTransporter = () => {
 
     if (service === "gmail") {
         return nodemailer.createTransport({
-            service: "gmail",
+            host: "smtp.gmail.com",
+            port: 465,
+            secure: true, // SSL — works on Render (port 587 is blocked)
             auth: {
                 user: process.env.EMAIL_USER,
-                pass: process.env.EMAIL_PASS, // Gmail App Password
-            },
-            tls: {
-                rejectUnauthorized: false,
+                pass: process.env.EMAIL_PASS,
             },
         });
     }
@@ -29,9 +28,6 @@ const createTransporter = () => {
             auth: {
                 user: process.env.EMAIL_USER,
                 pass: process.env.EMAIL_PASS,
-            },
-            tls: {
-                rejectUnauthorized: false,
             },
         });
     }
