@@ -35,7 +35,7 @@ import OpenSourceEvents from "./pages/OpenSource/OpenSourceEvents";
 import NotesBooks from "./pages/NotesBooks/NotesBooks";
 import HelpSupport from "./pages/Support/HelpSupport";
 import Settings from "./pages/Settings/Settings";
-
+import NotFound from "./pages/NotFound";
 const ProtectedRoute = ({ children }) => {
   const { user, loading } = useContext(UserContext);
   if (loading) return null;
@@ -310,6 +310,14 @@ const App = () => {
                     }
                   />
                 </Route>
+                <Route
+                 path="*"
+                 element={
+                    <PageTransition>
+                      <NotFound />
+                      </PageTransition>
+                    }
+                 />
               </Routes>
             </AnimatePresence>
           </Router>
