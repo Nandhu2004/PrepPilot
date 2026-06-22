@@ -44,7 +44,7 @@ const aiPromptSchema = Joi.object({
       role: Joi.string().valid("user", "model").required(),
       text: Joi.string().allow("").required()
     })
-  ).optional()
+  ).optional(),
 
   role: Joi.string().min(2).max(50).optional().custom(safePrompt, "Role Injection Protection"),
 
